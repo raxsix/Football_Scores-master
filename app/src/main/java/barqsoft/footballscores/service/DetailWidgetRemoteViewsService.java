@@ -20,13 +20,13 @@ import barqsoft.footballscores.Utilies;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class DetailWidgetRemoteViewsService extends RemoteViewsService {
 
-    public static final int COL_DATE = 0;
+
     public static final int COL_HOME = 1;
     public static final int COL_AWAY = 2;
     public static final int COL_HOME_GOALS = 3;
     public static final int COL_AWAY_GOALS = 4;
-    public static final int MATCH_ID = 5;
-    public static final int COL_LEAGUE = 6;
+    //public static final int MATCH_ID = 5;
+    //public static final int COL_LEAGUE = 6;
 
     private static final String[] SCORE_COLUMNS = {
 
@@ -57,10 +57,7 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                 if (data != null) {
                     data.close();
                 }
-                // This method is called by the app hosting the widget (e.g., the launcher)
-                // However, our ContentProvider is not exported so it doesn't have access to the
-                // data. Therefore we need to clear (and finally restore) the calling identity so
-                // that calls use our process and permission
+
                 final long identityToken = Binder.clearCallingIdentity();
 
                 Uri dateUri = DatabaseContract.scores_table.buildScoreWithDate();
