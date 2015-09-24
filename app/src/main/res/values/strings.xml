@@ -53,7 +53,7 @@
 
     <string name="layout_widget_item">Widget Item Layout</string>
     <string name="widget_text">This is a widget probably.</string>
-    <string name="api_key">caffbead76f945bd87b6e7f4fdc8b445</string>
+    <string name="api_key"></string>
     <string name="layout_widget_item_crests">Widget Item Crests Layout</string>
     <string name="layout_widget_item_team_name">Widget Item Team Name Layout</string>
     <string name="layout_widget_item_scores">Widget Item Scores Layout</string>
