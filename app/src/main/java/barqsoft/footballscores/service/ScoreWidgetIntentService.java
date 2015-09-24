@@ -1,17 +1,14 @@
 package barqsoft.footballscores.service;
 
 import android.app.IntentService;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import barqsoft.footballscores.DatabaseContract;
-import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.Utilies;
 import barqsoft.footballscores.widget.ScoreWidgetProvider;
@@ -21,13 +18,10 @@ import barqsoft.footballscores.widget.ScoreWidgetProvider;
  */
 public class ScoreWidgetIntentService extends IntentService {
 
-    public static final int COL_DATE = 0;
     public static final int COL_HOME = 1;
     public static final int COL_AWAY = 2;
     public static final int COL_HOME_GOALS = 3;
     public static final int COL_AWAY_GOALS = 4;
-    public static final int MATCH_ID = 5;
-    public static final int COL_LEAGUE = 6;
 
     private static final String[] SCORE_COLUMNS = {
 
@@ -65,38 +59,28 @@ public class ScoreWidgetIntentService extends IntentService {
             data.close();
             return;
         }
-
         String homeName = data.getString(COL_HOME);
         String awayName = data.getString(COL_AWAY);
         int homeScore = data.getInt(COL_HOME_GOALS);
         int awayScore = data.getInt(COL_AWAY_GOALS);
-        int matchId = data.getInt(MATCH_ID);
-        String league = data.getString(COL_LEAGUE);
 
         data.close();
 
         // There may be multiple widgets active, so update all of them
-
         for (int appWidgetId : appWidgetIds) {
 
             // Construct the RemoteViews object
             RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_layout);
-            Log.i("INFO", "HOME NAME " + homeName);
-            Log.i("INFO", "AWAY NAME " + awayName);
+
             String scores = Utilies.getScores(homeScore, awayScore);
-            Log.i("INFO", "SCORES " + scores);
 
             views.setTextViewText(R.id.home_name, homeName);
             views.setTextViewText(R.id.away_name, awayName);
             views.setTextViewText(R.id.score_textview, scores);
 
-            // Led to the MainActivity
-            Intent launchIntent = new Intent(this, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, launchIntent, 0);
-            views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }
+
 }

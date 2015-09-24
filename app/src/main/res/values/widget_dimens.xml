@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="widget_margin">8dp</dimen>
-    <dimen name="widget_default_height">160dp</dimen>
-    <dimen name="widget_default_width">160dp</dimen>
+    <dimen name="widget_default_height">40dp</dimen>0
+    <dimen name="widget_default_width">40dp</dimen>
     <dimen name="widget_score">16sp</dimen>
     <dimen name="widget_team">12sp</dimen>
     <dimen name="list_icon">40dp</dimen>
