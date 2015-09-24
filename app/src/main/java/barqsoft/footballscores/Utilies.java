@@ -1,10 +1,14 @@
 package barqsoft.footballscores;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by yehya khaled on 3/3/2015.
  */
 public class Utilies
 {
+    public static final long SECONDS_IN_A_DAY = 86400000;
     public static final int SERIE_A = 357;
     public static final int PREMIER_LEGAUE = 354;
     public static final int CHAMPIONS_LEAGUE = 362;
@@ -83,5 +87,12 @@ public class Utilies
             case "Stoke City FC" : return R.drawable.stoke_city;
             default: return R.drawable.no_icon;
         }
+    }
+
+    // Returns a STRING "2015-07-18"
+    public static String getFragmentDate(int offSet) {
+        Date fragmentdate = new Date(System.currentTimeMillis() + (offSet * SECONDS_IN_A_DAY));
+        SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
+        return mformat.format(fragmentdate);
     }
 }
