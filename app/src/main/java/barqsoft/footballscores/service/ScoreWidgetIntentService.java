@@ -73,6 +73,7 @@ public class ScoreWidgetIntentService extends IntentService {
         int homeScore = data.getInt(COL_HOME_GOALS);
         int awayScore = data.getInt(COL_AWAY_GOALS);
 
+
         data.close();
 
         // There may be multiple widgets active, so update all of them
