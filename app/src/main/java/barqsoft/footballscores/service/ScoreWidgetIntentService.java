@@ -1,14 +1,17 @@
 package barqsoft.footballscores.service;
 
 import android.app.IntentService;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import barqsoft.footballscores.DatabaseContract;
+import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.Utilies;
 import barqsoft.footballscores.widget.ScoreWidgetProvider;
@@ -17,6 +20,8 @@ import barqsoft.footballscores.widget.ScoreWidgetProvider;
  * Created by Ragnar on 9/24/2015.
  */
 public class ScoreWidgetIntentService extends IntentService {
+
+    private static final String TAG = ScoreWidgetIntentService.class.getSimpleName();
 
     public static final int COL_HOME = 1;
     public static final int COL_AWAY = 2;
@@ -42,6 +47,8 @@ public class ScoreWidgetIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
+        Log.d(TAG, "ScoreWidgetIntentService - onHandleIntent");
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager
                 .getAppWidgetIds(new ComponentName(this, ScoreWidgetProvider.class));
@@ -49,6 +56,7 @@ public class ScoreWidgetIntentService extends IntentService {
         Uri dateUri = DatabaseContract.scores_table.buildScoreWithDate();
         String[] date = new String[1];
         date[0] = Utilies.getFragmentDate(0);
+
         Cursor data = getContentResolver().query(dateUri, SCORE_COLUMNS, DatabaseContract.PATH_DATE, date, null);
 
         if (data == null) {
@@ -56,6 +64,7 @@ public class ScoreWidgetIntentService extends IntentService {
         }
 
         if (!data.moveToFirst()) {
+
             data.close();
             return;
         }
@@ -77,6 +86,11 @@ public class ScoreWidgetIntentService extends IntentService {
             views.setTextViewText(R.id.home_name, homeName);
             views.setTextViewText(R.id.away_name, awayName);
             views.setTextViewText(R.id.score_textview, scores);
+
+            // Led to the MainActivity
+            Intent launchIntent = new Intent(this, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, launchIntent, 0);
+            views.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidgetId, views);

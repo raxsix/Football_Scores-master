@@ -6,4 +6,6 @@
     <dimen name="widget_score">16sp</dimen>
     <dimen name="widget_team">12sp</dimen>
     <dimen name="list_icon">40dp</dimen>
+    <dimen name="widget_width">160dp</dimen>
+    <dimen name="widget_height">160dp</dimen>
 </resources>
